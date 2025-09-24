@@ -1,0 +1,150 @@
+@use '../../scss/' as *;
+
+.footer {
+  background: url('../../assets/images/OrcaXP/bg.png') center center no-repeat;
+  background-size: cover;
+
+  .footer-inner {
+    padding: 50px 0 40px;
+
+    .row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+
+      /* 왼쪽 메인 로고 + 소개 */
+      .widget-infor {
+        margin-left: clamp(24px, 3vw, 48px);   /* 🔥 좌측 여백 */
+        .logo { margin-bottom: 13px; }
+        .content { font-size: 16px; line-height: 26px; color: #ffffff; }
+      }
+
+      /* 오른쪽 거래소 로고들 */
+      .exchange-logos {
+        display: flex;
+        align-items: center;
+        gap: 28px;
+        margin-left: auto;
+        margin-right: clamp(24px, 3vw, 48px);  /* 🔥 우측 여백 */
+        z-index: 1;
+        position: relative;
+        flex: 0 0 auto;
+
+        a img {
+          width: 64px;
+          height: 64px;
+          display: block;
+          transition: transform .25s ease;
+        }
+        a:hover img { transform: scale(1.1); }
+      }
+    }
+  }
+
+  /* ====== 하단 커뮤니티 줄 ====== */
+  .bottom {
+    border-top: 1px solid #434343;
+    padding: 16px 0 18px;
+    @include flex(center, space-between);
+
+    .copy-right {
+      color: #c2c3c5;
+      font-size: 14px;
+      line-height: 22px;
+      white-space: nowrap;
+      flex-shrink: 0;
+      margin-left: clamp(16px, 2vw, 32px); /* 🔥 좌측 살짝 띄움 */
+    }
+
+    .social-item {
+      display: flex;
+      align-items: center;
+      justify-content: center;   /* ⭐ 작은 화면에서 아이콘 가운데 정렬 */
+      gap: 30px;
+      flex: 0 0 auto;            /* ⭐ 100%로 늘어나는 것 방지 */
+      width: auto;
+      margin-left: auto;
+      margin-right: clamp(16px, 2vw, 32px); /* 🔥 우측 여백 */
+    }
+  }
+
+  /* ✅ 중간 이하 화면 대응 */
+  @media (max-width: 1200px) {
+    .bottom {
+      flex-wrap: wrap;
+      row-gap: 10px;
+      justify-content: center;
+      text-align: center;
+
+      .copy-right {
+        order: 1;
+        width: 100%;
+        margin-left: 0;
+        text-align: center;
+      }
+      .social-item {
+        order: 2;
+        margin: 0 auto;
+        justify-content: center;   /* ⭐ 확실히 중앙 */
+      }
+    }
+
+    .footer-inner .row {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+
+      .widget-infor { margin-left: 0; }           
+      .exchange-logos {
+        margin-left: 0;
+        margin-right: 0;
+        margin-top: 30px;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 22px;
+      }
+    }
+  }
+
+  /* 📱 모바일에서 아이콘 간격 축소 */
+  @media (max-width: 640px) {
+    .bottom .social-item {
+      gap: 0px;
+    }
+    .footer-inner .row .exchange-logos a img {
+      width: 56px;
+      height: 56px;
+    }
+  }
+}
+
+/* scroll-top 버튼 */
+#scroll-top {
+  border-radius: 50%;
+  bottom: 23px;
+  cursor: pointer;
+  display: block;
+  height: 50px;
+  width: 50px;
+  position: fixed;
+  right: 14px;
+  text-align: center;
+  z-index: 999;
+}
+#scroll-top:before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--primary-color5);
+  border-radius: 50%;
+  z-index: -1;
+}
+#scroll-top::after {
+  color: var(--background-body);
+  content: "";
+  font-family: "Font Awesome 5 Pro";
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 50px;
+}

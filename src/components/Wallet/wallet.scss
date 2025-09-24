@@ -1,0 +1,119 @@
+/* UA 스타일/스피너 제거(전역) */
+button, [role="button"] {
+  appearance: none !important;
+  -webkit-appearance: none !important;
+  -moz-appearance: none !important;
+}
+button::-webkit-outer-spin-button,
+button::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin_button,
+input[type="number"]::-webkit-inner-spin_button {
+  -webkit-appearance: none !important;
+  margin: 0 !important;
+}
+
+/* 카드 */
+.s-card {
+  --h: 56px; --pad: 12px; --w: 720px; --mt: 20px;
+  --btnw: calc(var(--h) - (var(--pad) * 2)); /* 버튼 최소 너비(원 지름) */
+
+  position: relative;
+  display: flex; align-items: center;
+  height: var(--h);
+  width: min(100%, var(--w));
+  margin: var(--mt) auto 0;
+  padding-left: var(--pad);
+  padding-right: calc(var(--pad) + var(--btnw)); /* 버튼 실제 너비만큼 확보 */
+  border-radius: 9999px;
+  background: #fff;
+  color: #0b0b0b;
+  isolation: isolate;
+
+  /* Glow: 아래쪽 전용 (기본 흰빛) */
+  box-shadow:
+    0 2px 6px rgba(0,0,0,0.12),
+    0 3px 28px rgba(0,0,0,0.20),
+    0 4px 30px rgba(255,255,255,0.55);
+  transition: transform .22s ease, filter .22s ease, box-shadow .22s ease;
+
+  &:hover {
+    transform: scale(1.015);
+    filter: brightness(1.04);
+    box-shadow:
+      0 4px 10px rgba(0,0,0,0.18),
+      0 4px 32px rgba(0,0,0,0.25),
+      0 5px 35px rgba(255,255,255,0.75);
+  }
+
+  &.decrypted {
+    box-shadow:
+      0 2px 6px rgba(0,0,0,0.12),
+      0 4px 28px rgba(0,0,0,0.20),
+      0 5px 36px rgba(0,200,255,0.55);
+    &:hover {
+      box-shadow:
+        0 4px 10px rgba(0,0,0,0.18),
+        0 4px 34px rgba(0,0,0,0.25),
+        0 5px 38px rgba(0,200,255,0.85);
+    }
+  }
+}
+
+/* 주소 텍스트 */
+.s-code {
+  font-size: 16px;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* 버튼: 텍스트 길이에 맞춰 자동 확장되는 캡슐형 */
+.s-toggle {
+  all: unset; /* UA 기본 스타일 완전 제거 */
+  position: absolute; top: 50%; right: var(--pad);
+  transform: translateY(-50%);
+  height: calc(var(--h) - (var(--pad) * 2));
+  min-width: calc(var(--h) - (var(--pad) * 2)); /* 최소 = 원 지름 */
+  padding: 0 16px;
+  border-radius: 9999px;
+
+  display: inline-flex; align-items: center; justify-content: center;
+  background: #0b0b0b; color: #fff;
+  font-weight: 800; font-size: 13px; letter-spacing: .2px;
+  cursor: pointer;
+  box-shadow: 0 0 0 2px #fff, 0 8px 18px rgba(0,0,0,.28);
+  transition: box-shadow .2s ease, background .2s ease, filter .2s ease;
+
+  user-select: none; -webkit-user-select: none;
+  -webkit-user-drag: none;
+  touch-action: manipulation;
+
+  &:hover { background:#111; box-shadow: 0 0 0 2px #fff, 0 10px 22px rgba(0,0,0,.38); }
+  &.is-open { background:#161616; }
+
+  /* 혹시 남을 수 있는 WebKit 데코레이터 무력화 */
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin_button,
+  &::-webkit-textfield-decoration-container,
+  &::-webkit-clear-button,
+  &::-webkit-calendar-picker-indicator { display: none !important; -webkit-appearance: none !important; }
+}
+
+/* (옵션) 카드 스크롤바 버튼 숨김 */
+.s-card::-webkit-scrollbar,
+.s-card::-webkit-scrollbar-button { display: none; width: 0; height: 0; }
+
+/* 반응형 */
+@media (max-width: 640px) {
+  .s-card {
+    --h: 52px; --pad: 12px;
+    /* 좌우 12px 마진 고정 + 중앙정렬 보장 */
+    width: calc(100vw - 36px);
+    margin: var(--mt) auto 0;
+  }
+  .s-code { font-size: 15px; }
+  .s-toggle { font-size: 12px; padding: 0 14px; }
+}

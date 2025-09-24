@@ -1,0 +1,193 @@
+@use '../../scss/' as *;
+
+/* Google Fonts - Monoton (WHO YOU GONNA CALL? 스타일) */
+@import url('https://fonts.googleapis.com/css2?family=Monoton&display=swap');
+
+/* (공용) 네온 깜빡임 키프레임 */
+@keyframes neon-call-flicker {
+  50% {
+    color: white;
+    filter: saturate(200%) hue-rotate(10deg);
+  }
+}
+
+/* =======================================
+   OrcaXP 헤딩: Monoton + 네온 (yellow→green 팔레트)
+   ======================================= */
+.tf-about {
+  /* JS가 없으면 이 인터벌 사용 */
+  --neon-call-interval: 2000ms;
+
+  .tf-heading .heading.neon-call-text {
+    /* 팔레트 */
+    --nc1: yellow;
+    --nc2: lime;
+    --nc3: green;
+    --nc4: darkgreen;
+
+    font-family: 'Monoton', cursive; /* WHO YOU GONNA CALL?와 동일 */
+    font-weight: 400;
+    text-transform: uppercase;
+
+    /* 크기 크게 (반응형) */
+    font-size: clamp(55px, 8vw, 108px);
+    line-height: 1;
+    letter-spacing: 0.03em;
+
+    color: yellow;
+    filter: saturate(60%);
+    will-change: filter, color;
+    display: inline-block;
+
+    text-shadow:
+      0 0 12px var(--nc1),
+      0 0 24px var(--nc2),
+      0 0 48px var(--nc3),
+      0 0 96px var(--nc4);
+
+    animation: neon-call-flicker var(--neon-call-interval) steps(100) .15s infinite;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .tf-heading .heading.neon-call-text {
+      animation: none;
+      filter: none;
+      text-shadow: none;
+    }
+  }
+}
+
+/* ================= 기본 step 스타일 (원본 유지) ================= */
+.tf-step {
+  background: var(--primary-color8);
+  padding: 76px 30px 30px 30px;
+  text-align: center;
+  margin-bottom: 10px;
+  box-shadow: 0px 10px 25px rgba(71, 92, 133, 0.1);
+  position: relative;
+  @include transition3;
+  & .step-title {
+    position: relative;
+    margin-bottom: 18px;
+    & .sub-number {
+      position: absolute;
+      top: -13px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-family: "Bakbak One";
+      font-weight: 400;
+      font-size: 80px;
+      color: #21E786;
+      opacity: 0.3;
+      @include transition3;
+    }
+    & h3 {
+      position: relative;
+      font-family: 'Bakbak One';
+      font-weight: 400;
+      font-size: 24px;
+      text-transform: uppercase;
+      color: var(--primary-color3);
+    }
+  }
+  & p {
+    font-family: 'Poppins';
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 28px;
+    color: var(--primary-color);
+  }
+  &:hover {
+    box-shadow: 0px 10px 25px rgba(71, 92, 133, 0.1);
+    cursor: pointer;
+    .step-title {
+      .sub-number {
+        color: #21E786;
+        opacity: 0.8;
+      }
+    }
+  }
+}
+
+/* 다크 모드 */
+.is_dark .tf-step {
+  box-shadow: none;
+  &:hover {
+    cursor: pointer;
+    box-shadow: 0px 5px 15px var(--primary-color36);
+  }
+}
+
+/* 설명 Typewriter */
+.tf-about .tw { display: inline-grid; line-height: 1.6; }
+.tf-about .tw-ghost,
+.tf-about .tw-text { grid-area: 1 / 1; white-space: pre-wrap; }
+.tf-about .tw-ghost { visibility: hidden; }
+.tf-about .tw-text  { width: 100%; text-align: inherit; }
+.tf-about .tw-caret {
+  display: inline-block; width: 2px; height: 1.05em; margin-left: 2px;
+  background: currentColor; vertical-align: -0.15em;
+  animation: twBlink .6s steps(1,end) infinite;
+}
+@keyframes twBlink { 50% { opacity: 0; } }
+
+/* 카운터 숫자 */
+.counter-number {
+  perspective: 700px;
+  display: inline-flex;
+  gap: clamp(6px, 0.8vw, 12px);
+  font-family: "Bakbak One";
+  font-weight: 400;
+  font-size: clamp(77px, 15vw, 96px);
+  line-height: 1;
+
+  .digit {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1ch;
+    transform-origin: 50% 50%;
+    will-change: transform, filter, opacity;
+
+    /* 🔥 앞으로 튀는 애니메이션 + 글로우 */
+    animation: popForward 2.8s cubic-bezier(.2,.9,.2,1.05) infinite;
+    animation-delay: calc(var(--i) * 0.35s);
+
+    /* ✨ 기본 은은한 글로우 */
+    text-shadow: 0 0 6px rgba(33,231,134,0.35);
+    opacity: 0;
+  }
+}
+
+/* 앞으로만 톡 튀었다가 돌아옴 */
+@keyframes popForward {
+  0%   { transform: translateZ(0)   scale(1.00); opacity: 0.8; text-shadow: 0 0 6px rgba(33,231,134,0.35); }
+  22%  { transform: translateZ(18px) scale(1.14); opacity: 1; text-shadow: 0 0 20px rgba(33,231,134,0.9); }
+  45%  { transform: translateZ(0)   scale(1.00); opacity: 1; text-shadow: 0 0 10px rgba(33,231,134,0.5); }
+  80%  { transform: translateZ(0)   scale(1.00); opacity: 1; text-shadow: 0 0 6px rgba(33,231,134,0.35); }
+  100% { transform: translateZ(0)   scale(1.00); opacity: 0.9; text-shadow: 0 0 6px rgba(33,231,134,0.35); }
+}
+
+/* 접근성 */
+@media (prefers-reduced-motion: reduce) {
+  .counter-number .digit {
+    animation: none;
+    text-shadow: none;
+    opacity: 1;
+  }
+}
+/* 제목–설명 간격 정확히 지정 */
+.tf-about .tf-heading {
+  /* 화면 크기에 따라 자연스럽게 커지는 간격 */
+  --heading-gap: clamp(12px, 1.6vw, 26px);
+}
+
+.tf-about .tf-heading .heading.neon-call-text {
+  /* 아래쪽 마진만 부여 */
+  margin: 0 0 var(--heading-gap);
+}
+
+.tf-about .tf-heading .sub-heading {
+  /* p 기본 마진 제거해서 예측 가능하게 */
+  margin: 0;
+}

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="%PUBLIC_URL%/favicon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta
+      name="description"
+      content="Born from a penguin in an orca hoodie  Fueled by XP ⚡  A coin for degens, gamers, memers, and keyboard warriors   OXP: BUY to level up, miss it and fall behind"
+    />
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/favicon.png" />
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <!--
+      manifest.json provides metadata used when your web app is installed on a
+      user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
+    -->
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    <link rel="stylesheet" href="bootstrap.css">
+    <link rel="stylesheet" href="%PUBLIC_URL%/glitch-loader.css">
+    <link rel="stylesheet" href="%PUBLIC_URL%/vendor/fa6/css/all.min.css">
+
+
+
+
+    <!--
+      Notice the use of %PUBLIC_URL% in the tags above.
+      It will be replaced with the URL of the `public` folder during the build.
+      Only files inside the `public` folder can be referenced from the HTML.
+
+      Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
+      work correctly both with client-side routing and a non-root public URL.
+      Learn how to configure a non-root public URL by running `npm run build`.
+    -->
+    <title> OrcaXP </title>
+  </head>
+  <body class="is_dark">
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <!-- ✅ Glitch Loader -->
+    <div id="preloader" class="glitch-loader-container">
+      <div class="glitch-scanlines"></div>
+      <div class="glitch-noise"></div>
+      <div class="glitch-loader-wrapper">
+        <div class="glitch-text" data-text="OXP LOADING">OXP LOADING</div>
+        <div class="neon-loading-bar"></div>
+        <div class="glitch-loading-dots">
+          <div class="glitch-dot"></div>
+          <div class="glitch-dot"></div>
+          <div class="glitch-dot"></div>
+          <div class="glitch-dot"></div>
+          <div class="glitch-dot"></div>
+        </div>
+        <div class="glitch-progress-text">INITIALIZING SYSTEM...</div>
+      </div>
+    </div>
+    <div id="root"></div>
+    <!--
+      This HTML file is a template.
+      If you open it directly in the browser, you will see an empty page.
+
+      You can add webfonts, meta tags, or analytics to this file.
+      The build step will place the bundled scripts into the <body> tag.
+
+      To begin the development, run `npm start` or `yarn start`.
+      To create a production bundle, use `npm run build` or `yarn build`.
+    -->
+
+
+  <script>
+    (function () {
+      const MIN_MS = 4000;   // 최소 노출: 1초 (원하면 600~2000 조절)
+      const MAX_MS = 8000;   // 최장 대기: 6초 (네트워크 느릴 때도 빠져나오게)
+      const loader = document.getElementById("preloader");
+      const rootEl = document.getElementById("root");
+      if (!loader) return;
+
+      // 혹시 숨겨져 있었으면 보여주기 보장
+      loader.classList.remove("is-hidden");
+
+      // ① 최소 노출시간
+      const waitMin = new Promise(res => setTimeout(res, MIN_MS));
+
+      // ② window.load (모든 리소스 로드 완료)
+      const waitLoad = new Promise(res => {
+        if (document.readyState === "complete") res();
+        else window.addEventListener("load", () => res(), { once: true });
+      });
+
+      // ③ React가 실제로 뭔가 렌더했는지 감지
+      const waitRootRendered = new Promise(res => {
+        if (!rootEl) return res();
+        if (rootEl.children.length > 0) return res();
+        const obs = new MutationObserver(() => {
+          if (rootEl.children.length > 0) {
+            obs.disconnect(); res();
+          }
+        });
+        obs.observe(rootEl, { childList: true });
+      });
+
+      // ④ 최장 대기 타임아웃(안전핀)
+      const waitMax = new Promise(res => setTimeout(res, MAX_MS));
+
+      // 최소 노출 + (load | root 렌더 | 최대시간) → 숨김
+      Promise.all([waitMin, Promise.race([waitLoad, waitRootRendered, waitMax])])
+        .then(() => loader.classList.add("is-hidden"));
+
+      // 수동 디버그(ESC 누르면 숨김)
+      window.addEventListener("keydown", e => { if (e.key === "Escape") loader.classList.add("is-hidden"); });
+    })();
+  </script>
+  </body>
+</html>

@@ -1,0 +1,269 @@
+/* ================= Rotating Neon Border ================= */
+@property --angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+@keyframes neon-spin-angle { to { --angle: 360deg; } }
+
+@keyframes aura-pulse {
+  0%   { transform: scale(0.94); opacity: .36; }
+  50%  { transform: scale(1.04); opacity: .52; }
+  100% { transform: scale(0.94); opacity: .36; }
+}
+
+/* ✅ ROAD MAP 네온 텍스트 깜빡임 (전역) */
+@keyframes neon-flicker {
+  50% {
+    color: white;
+    filter: saturate(200%) hue-rotate(20deg);
+  }
+}
+
+.section-roadmap2 {
+  --inner: #0b0e16;
+  --text: rgba(255,255,255,.92);
+  --muted: rgba(255,255,255,.68);
+  --ring: 4px;
+  --card-radius: 14px;
+  --spin: 3s;
+  --pulse: 3s;
+
+  /* ✅ ROAD MAP 네온 인터벌 기본값 (JS가 없으면 이 값 사용) */
+  --neon-interval: 3200ms;
+
+  .timeline-split {
+    position: relative;
+    width: min(1200px, 92vw);
+    margin: 0 auto;
+
+    .center-line {
+      position: absolute;
+      left: 50%; top: 0; bottom: 0;
+      transform: translateX(-50%);
+      width: 2px;
+      background: linear-gradient(#66e1ff,#6b5dff 40%,#6a00ff);
+      opacity: .35;
+      pointer-events: none;
+    }
+
+    /* 스크롤 점 */
+    --dot-size: 18px;
+    .scroll-dot {
+      position: absolute;
+      left: 50%; top: 0;
+      transform: translate(-50%, var(--dotY, 0px));
+      width: var(--dot-size);
+      height: var(--dot-size);
+      border-radius: 50%;
+      background: radial-gradient(circle at 50% 50%, #bff3ff 0%, #5fd4ff 40%, #2a93ff 100%);
+      box-shadow:
+        0 0 12px rgba(95, 212, 255, .8),
+        0 0 28px rgba(58, 148, 255, .45),
+        0 0 48px rgba(78, 0, 194, .35);
+      outline: 2px solid rgba(255,255,255,.12);
+      z-index: 3;
+      pointer-events: none;
+      transition: transform .08s linear;
+    }
+  }
+
+  .rm-stack { position: relative; overflow: visible; }
+
+  /* 글로우(오라) */
+  .rm-halo {
+    position: absolute;
+    inset: -8px;
+    border-radius: var(--card-radius);
+    z-index: 0;
+    pointer-events: none;
+    background: conic-gradient(
+      from var(--angle),
+      rgba(93,220,255,.90) 0deg,
+      rgba(60,103,227,.90) 120deg,
+      rgba(78,0,194,.90) 240deg,
+      rgba(93,220,255,.90) 360deg
+    );
+    filter: blur(46px);
+    opacity: .33;
+    animation:
+      neon-spin-angle var(--spin) linear infinite,
+      aura-pulse var(--pulse) ease-in-out infinite;
+  }
+
+  /* 카드 */
+  .rm-card {
+    position: relative;
+    z-index: 1;
+    display: block;
+    border-radius: var(--card-radius);
+    background: var(--inner);
+    color: var(--text);
+    isolation: isolate;
+
+    /* ⬅️ 보더가 이미지를 덮도록 확실히 레이어 고정 */
+    overflow: hidden;               /* 기존 visible → hidden */
+    outline: 1px solid transparent; /* 페인팅 레이어 강제 (일부 브라우저 튜닝) */
+
+    box-shadow: 0 18px 38px rgba(0,0,0,.35);
+  }
+
+  /* 네온 보더 (회전 링) */
+  .rm-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    padding: var(--ring);
+    border-radius: inherit;
+    background: conic-gradient(
+      from var(--angle),
+      #5ddcff 0deg, #3c67e3 120deg, #4e00c2 240deg, #5ddcff 360deg
+    );
+
+    /* content-box만 비워서 링만 보이게 */
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    mask-composite: exclude;
+
+    animation: neon-spin-angle var(--spin) linear infinite;
+    z-index: 5;             /* ⬅️ 이미지(z:3) 위에 확실히 */
+    pointer-events: none;
+  }
+
+  /* 🔁 Firefox 등 마스크 이슈 폴백 (지원 안 되면 보더 이미테이션) */
+  @supports not (mask-composite: exclude) {
+    .rm-card::before {
+      /* 마스크 대신 배경-클립으로 비슷하게 */
+      background:
+        linear-gradient(var(--inner), var(--inner)) padding-box,
+        conic-gradient(from var(--angle), #5ddcff, #3c67e3 120deg, #4e00c2 240deg, #5ddcff 360deg) border-box;
+      -webkit-mask: none;
+      mask: none;
+    }
+  }
+
+  /* 텍스트 카드 내용 */
+  .rm-text {
+    position: relative;
+    z-index: 3;
+    text-align: left;
+    padding: clamp(18px, 2.6vw, 28px);
+    .title-row { margin-bottom: 12px; }
+    h3 { margin: 0; font-weight: 800; font-size: clamp(22px,3.2vw,36px); }
+    ul { list-style: none; margin: 0; padding: 0; }
+    li {
+      padding: 10px 0;
+      color: var(--muted);
+      border-bottom: 1px dashed rgba(255,255,255,.12);
+      &:last-child { border-bottom: 0; }
+    }
+  }
+
+  /* 이미지 카드 */
+  .rm-image {
+    position: relative;
+    z-index: 3;
+    height: var(--h, 480px);
+    padding: 0;
+    border-radius: inherit;
+    overflow: hidden;
+
+    img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+      border-radius: inherit;
+
+      /* ⬇️ 이미지가 보더를 덮지 않도록 확실히 낮춤 */
+      position: relative;
+      z-index: 3;
+    }
+  }
+
+  .phase {
+    margin: 48px 0;
+    opacity: 0;
+    transform: translateY(32px);
+    transition: opacity .6s ease, transform .6s ease;
+    &.show { opacity: 1; transform: none; }
+    .desktop-view {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      align-items: center;
+      min-height: 60vh;
+    }
+    .mobile-view { display: none; }
+  }
+
+  /* ✅ ROAD MAP 제목 네온 효과 + 크게 (폰트 변경 없음) */
+  .tf-heading .heading.neon-motel-text {
+    /* MOTEL 팔레트 */
+    --nm-c1: azure;
+    --nm-c2: aqua;
+    --nm-c3: dodgerblue;
+    --nm-c4: blue;
+
+    position: relative;
+    display: inline-block;
+
+    /* ⬇️ 글씨 크게 (반응형) */
+    font-size: clamp(42px, 7vw, 80px);
+    line-height: 1;
+    letter-spacing: 0.04em;
+
+    color: azure;
+    filter: saturate(30%);
+    will-change: filter, color;
+
+    /* 네온 글로우 (크기에 맞춰 퍼짐도 상향) */
+    text-shadow:
+      0 0 6px var(--nm-c1),
+      0 0 12px var(--nm-c2),
+      0 0 24px var(--nm-c3),
+      0 0 50px var(--nm-c4);
+
+    /* 깜빡임 (랜덤 인터벌은 JS에서 --neon-interval 갱신) */
+    animation: neon-flicker var(--neon-interval) steps(100) .2s infinite;
+  }
+
+  @media (max-width: 900px) {
+    .timeline-split .center-line { display: none; }
+    .timeline-split { --dot-size: 14px; }
+    .scroll-dot { display: none; }
+
+    .phase {
+      margin: 30px 0;
+      opacity: 1;
+      transform: none;
+      --h: auto;
+
+      .desktop-view { display: none; }
+      .mobile-view { display: block; }
+
+      .rm-image {
+        height: auto !important;
+        margin: 30px 0;
+        aspect-ratio: 16 / 9;
+        @supports not (aspect-ratio: 1 / 1) {
+          position: relative;
+          &::before { content: ""; display: block; padding-top: 56.25%; }
+          img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; border-radius: inherit; }
+        }
+      }
+    }
+
+    .rm-halo { filter: blur(36px); opacity: .28; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .rm-halo, .rm-card::before { animation: none; }
+    /* ✅ 모션 민감 사용자 배려 */
+    .tf-heading .heading.neon-motel-text {
+      animation: none;
+      filter: none;
+      text-shadow: none;
+    }
+  }
+}
