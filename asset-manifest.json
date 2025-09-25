@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/static/css/main.9c6934bb.css",
-    "main.js": "/static/js/main.1dbf94a8.js",
+    "main.css": "/static/css/main.ac3c01d9.css",
+    "main.js": "/static/js/main.f0549ec5.js",
     "static/media/fa-duotone-900.svg": "/static/media/fa-duotone-900.bac7a949fdfa983ff8a5.svg",
     "static/media/fa-light-300.svg": "/static/media/fa-light-300.676ceddb711397cb345f.svg",
     "static/media/fa-regular-400.svg": "/static/media/fa-regular-400.ef3cf368d75e16e0a1c3.svg",
@@ -99,11 +99,11 @@
     "static/media/email-2.svg": "/static/media/email-2.13ef6977ba156dd1b0d14ff6e3893573.svg",
     "static/media/phone.svg": "/static/media/phone.fd195e2ed0459b982b9bb2733eec27cc.svg",
     "static/media/loaction.svg": "/static/media/loaction.72c9c23df38a0aee1aa9627b7c7efce2.svg",
-    "main.9c6934bb.css.map": "/static/css/main.9c6934bb.css.map",
-    "main.1dbf94a8.js.map": "/static/js/main.1dbf94a8.js.map"
+    "main.ac3c01d9.css.map": "/static/css/main.ac3c01d9.css.map",
+    "main.f0549ec5.js.map": "/static/js/main.f0549ec5.js.map"
   },
   "entrypoints": [
-    "static/css/main.9c6934bb.css",
-    "static/js/main.1dbf94a8.js"
+    "static/css/main.ac3c01d9.css",
+    "static/js/main.f0549ec5.js"
   ]
 }
