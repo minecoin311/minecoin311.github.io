@@ -1,10 +1,11 @@
 {
   "files": {
-    "main.css": "/static/css/main.8dffc569.css",
-    "main.js": "/static/js/main.c4c62a00.js",
+    "main.css": "/static/css/main.c0621995.css",
+    "main.js": "/static/js/main.3f163b78.js",
     "static/media/fa-duotone-900.svg": "/static/media/fa-duotone-900.bac7a949fdfa983ff8a5.svg",
     "static/media/fa-light-300.svg": "/static/media/fa-light-300.676ceddb711397cb345f.svg",
     "static/media/fa-regular-400.svg": "/static/media/fa-regular-400.ef3cf368d75e16e0a1c3.svg",
+    "static/media/bg1.png": "/static/media/bg1.4bb8c8e4402c72c7fb24.png",
     "static/media/fa-solid-900.svg": "/static/media/fa-solid-900.c4054b9e4c6b8fad2407.svg",
     "static/media/oxp-load2.png": "/static/media/oxp-load2.7769b39a000a0a036f08.png",
     "static/media/oxp-load3.png": "/static/media/oxp-load3.aa55fe025b3d70cdfcd8.png",
@@ -63,6 +64,7 @@
     "static/media/bg-slider-3.jpg": "/static/media/bg-slider-3.9fb2b3ecc4f4647babbf.jpg",
     "static/media/fa-brands-400.woff": "/static/media/fa-brands-400.7142440b571a91349e60.woff",
     "static/media/work-1.svg": "/static/media/work-1.efaa30a66b605a6b57e45a8a7db2a304.svg",
+    "static/media/pump-logo.png": "/static/media/pump-logo.e1df56fb13784383254e.png",
     "static/media/work-4.svg": "/static/media/work-4.54a3cb640f9a454586f05ff4791b49dd.svg",
     "static/media/fa-brands-400.woff2": "/static/media/fa-brands-400.0ffa8f97ca92f387e47f.woff2",
     "static/media/binasea.svg": "/static/media/binasea.7dd26abf0c7fc458e690.svg",
@@ -80,6 +82,8 @@
     "static/media/blog-7.jpg": "/static/media/blog-7.0111e40d2c9bc2c90cdf.jpg",
     "static/media/blog-8.jpg": "/static/media/blog-8.7173ed7cfa93c642f41b.jpg",
     "static/media/blog-9.jpg": "/static/media/blog-9.ee041097e1565993e47e.jpg",
+    "static/media/logo-footer.png": "/static/media/logo-footer.b5f4d02ad4c85955aee1.png",
+    "static/media/logo_dark.png": "/static/media/logo_dark.b5f4d02ad4c85955aee1.png",
     "static/media/binasea.eot": "/static/media/binasea.432bbd904e57aef12c63.eot",
     "static/media/binasea.woff": "/static/media/binasea.ddcd494f462a6ed3a60b.woff",
     "static/media/binasea.ttf": "/static/media/binasea.25954ed8c986cc78dc6d.ttf",
@@ -87,9 +91,6 @@
     "static/media/rm-5.jpg": "/static/media/rm-5.8ce90be28aa98f6b53f2.jpg",
     "static/media/blog-details-1.jpg": "/static/media/blog-details-1.11e92c4b152b1813844d.jpg",
     "static/media/logo.png": "/static/media/logo.1c78586c0db7bdcca9e7.png",
-    "static/media/logo-footer.png": "/static/media/logo-footer.0b9107b83fe559c834b4.png",
-    "static/media/logo_dark.png": "/static/media/logo_dark.0b9107b83fe559c834b4.png",
-    "static/media/orca-logo.svg": "/static/media/orca-logo.9fe389bc8c3cb4caede1e104c6319f86.svg",
     "static/media/jupiter-logo.svg": "/static/media/jupiter-logo.87fbfd356d8aec54fd102b2df061f7b4.svg",
     "static/media/email.svg": "/static/media/email.7625f1ff08645bfe018f7838dd436dd5.svg",
     "static/media/dexscreener-logo.svg": "/static/media/dexscreener-logo.01533c2d73b3a3d99f6a58fd81d2e64a.svg",
@@ -98,11 +99,11 @@
     "static/media/email-2.svg": "/static/media/email-2.13ef6977ba156dd1b0d14ff6e3893573.svg",
     "static/media/phone.svg": "/static/media/phone.fd195e2ed0459b982b9bb2733eec27cc.svg",
     "static/media/loaction.svg": "/static/media/loaction.72c9c23df38a0aee1aa9627b7c7efce2.svg",
-    "main.8dffc569.css.map": "/static/css/main.8dffc569.css.map",
-    "main.c4c62a00.js.map": "/static/js/main.c4c62a00.js.map"
+    "main.c0621995.css.map": "/static/css/main.c0621995.css.map",
+    "main.3f163b78.js.map": "/static/js/main.3f163b78.js.map"
   },
   "entrypoints": [
-    "static/css/main.8dffc569.css",
-    "static/js/main.c4c62a00.js"
+    "static/css/main.c0621995.css",
+    "static/js/main.3f163b78.js"
   ]
 }
